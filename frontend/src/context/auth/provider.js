@@ -3,25 +3,18 @@ import { AuthContext } from './context';
 
 const isBrowser = typeof window !== 'undefined';
 const INITIAL_STATE = {
-  isAuthenticated: isBrowser && !!localStorage.getItem('access_token'),
-  token: isBrowser && localStorage.getItem('access_token'),
+  isAuthenticated: isBrowser && !!localStorage.getItem('username'),
+  username: isBrowser && localStorage.getItem('username'),
 };
 
 const reducer = (state, action) => {
   switch (action.type) {
-    case 'SIGNIN_SUCCESS':
-      localStorage.setItem('access_token', `${action.payload}`);
+    case 'SET_USERNAME_SUCCESS':
+      localStorage.setItem('username', `${action.payload}`);
       return {
         ...state,
         isAuthenticated: true,
-        token: action.payload
-      };
-    case 'SIGN_OUT':
-      delete localStorage['access_token'];
-      return {
-        ...state,
-        isAuthenticated: false,
-        token: null
+        username: action.payload
       };
     default:
       return state;

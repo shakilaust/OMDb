@@ -14,6 +14,7 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import LinkIcon from '@material-ui/icons/Link';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import moment from 'moment';
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -38,7 +39,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CardView = ({intemInfo, onClickBookMark}) => {
+const CardView = ({intemInfo, onClickBookMark, showLink=true}) => {
+  const history = useHistory();
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
 
@@ -51,34 +53,36 @@ const CardView = ({intemInfo, onClickBookMark}) => {
     if(onClickBookMark) onClickBookMark(intemInfo);
   };
 
-  const openLinkNewTab = data => {
-    const newWindow = window.open(`/omdb/${intemInfo.Type}/${intemInfo.imdbID}`, '_blank', 'noopener,noreferrer')
+  const openLinkNewTab = intemInfo => {
+    let url = `/omdb/${intemInfo.Type}/${intemInfo.imdbID}`;
+    const newWindow = window.open(url, '_blank', 'noopener,noreferrer')
     if (newWindow) newWindow.opener = null
   };
 
   return (
     <Card className={classes.root} raised>
       <CardHeader
-        title={intemInfo.title}
-        subheader={moment(intemInfo.Year).format('llll')}
+        title={intemInfo && intemInfo.title}
+        subheader={moment(intemInfo && intemInfo.Year).format('llll')}
       />
       <CardMedia
         className={classes.media}
-        image={intemInfo.Poster ? intemInfo.Poster : ""}
+        image={intemInfo && intemInfo.Poster ? intemInfo.Poster : ""}
         title=""
       />
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
-          {intemInfo.Title}
+          {intemInfo && intemInfo.Title}
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
         <IconButton aria-label="add to favorites" onClick={() => handleOnClickBookMark(intemInfo)}>
           <FavoriteIcon />
         </IconButton>
-        <IconButton aria-label="share" onClick={() => openLinkNewTab(intemInfo)}>
+        {showLink &&  <IconButton aria-label="share" onClick={() => openLinkNewTab(intemInfo)}>
           <LinkIcon />
-        </IconButton>
+        </IconButton>}
+       
    
       </CardActions>
       

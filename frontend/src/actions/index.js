@@ -3,7 +3,6 @@ export const postFetch = (fetchUrl, postData = {}) => {
       method: 'POST',
       headers: { 
         'Content-Type': 'application/json', 
-        'Authorization': `Token ${localStorage.getItem('token')}` 
       },
       body: JSON.stringify(postData)
     };

@@ -6,7 +6,7 @@ import {
 } from "react-router-dom";
 
 import Dashboard from '../container/Dashboard';
-import MovideOrSerialPage from '../container/MovideOrSerialPage';
+import MoviePage from '../container/MoviePage';
 import RecentlyView from '../container/RecentlyView';
 import WatchList from '../container/WatchList';
 
@@ -15,9 +15,13 @@ const Routes = props => {
     <Router>
       <Switch>
         <Route exact path='/' component={Dashboard}/>
+        <Route
+            path="/omdb/:type/:id"
+            component={MoviePage}
+        />
+
         <Route exact path='/recently-viewed' component={RecentlyView} />
         <Route exact path='/watch-list' component={WatchList} />
-        <Route path='/omdb/:type/:id' componet={MovideOrSerialPage} />
         
       </Switch>
     </Router>

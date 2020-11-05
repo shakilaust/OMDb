@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useState , useEffect} from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -6,6 +6,7 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import { useHistory } from 'react-router-dom';
+import { generateRandomUsername } from '../utils';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -25,6 +26,25 @@ const useStyles = makeStyles((theme) => ({
 export default ({ children, ...props }) => {
   const classes = useStyles();
   const history = useHistory();
+  const isAuthenticated = localStorage.getItem('username', false);
+  console.log('first page isAuthenticated', isAuthenticated, 'not value', !isAuthenticated);
+  const [ showModal, setShowModal] = useState(!isAuthenticated);
+  console.log('showModal', showModal);
+
+  useEffect(() => {
+    console.log('useEffect');
+    setShowModal(!isAuthenticated);
+  }, [isAuthenticated])
+
+  useEffect(() => {
+    // component did mount
+    console.log('userEffect first time');
+    if( !localStorage.getItem('username')) {
+      const username = generateRandomUsername();
+      localStorage.setItem('username', username);
+      console.log('generated username', username);
+    }
+  })
 
   return (
     <div className={classes.root}>
@@ -45,7 +65,8 @@ export default ({ children, ...props }) => {
         </Toolbar>
       </AppBar>
       <Grid container className={classes.container}>
-        {children}
+      {/* { showModal ? <UserNameModal showModal={showModal} setShowModal={setShowModal} history={history}/> : {children}}  */}
+       {children}
       </Grid>
     </div>
   );

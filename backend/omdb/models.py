@@ -8,7 +8,7 @@ class Visitor(models.Model):
 class VisitorViewHistory(models.Model):
     visitor = models.ForeignKey(Visitor, on_delete=models.CASCADE)
     imdb_id = models.CharField(max_length=30)
-    last_visit = models.DateTimeField()
+    last_visit = models.DateTimeField(default=timezone.now)
 
 
 class VisitorReview(models.Model):
