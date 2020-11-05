@@ -4,30 +4,21 @@ import {
   Switch,
   Route,
 } from "react-router-dom";
-import PrivateRoute from './PrivateRoute';
-import AuthTemplate from '../templates/AuthTemplate';
-import LoggedInUserTemplate from '../templates/LoggedInUserTemplate';
-import LoginView from '../container/Auth/LoginView';
-import RegistrationView from '../container/Auth/RegistraionView'
-import Dashboard from '../container/Dashboard';
 
+import Dashboard from '../container/Dashboard';
+import MovideOrSerialPage from '../container/MovideOrSerialPage';
+import RecentlyView from '../container/RecentlyView';
+import WatchList from '../container/WatchList';
 
 const Routes = props => {
   return (
     <Router>
       <Switch>
-        <PrivateRoute exact path='/' component={Dashboard} Template={LoggedInUserTemplate}/>
-        <Route path='/login' exact={true}>
-          <AuthTemplate>
-            <LoginView/>
-          </AuthTemplate>
-        </Route>
-
-        <Route path='/registration' exact={true}>
-          <AuthTemplate>
-            <RegistrationView/>
-          </AuthTemplate>
-        </Route>
+        <Route exact path='/' component={Dashboard}/>
+        <Route exact path='/recently-viewed' component={RecentlyView} />
+        <Route exact path='/watch-list' component={WatchList} />
+        <Route path='/omdb/:type/:id' componet={MovideOrSerialPage} />
+        
       </Switch>
     </Router>
   );

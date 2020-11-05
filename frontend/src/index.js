@@ -3,8 +3,6 @@ import ReactDOM from 'react-dom';
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
-import AuthProvider from './context/auth/provider';
-import UserProvider from './context/user/provider';
 import theme from './setupTheme';
 import Routes from './routes';
 
@@ -12,11 +10,7 @@ const App = props => {
   return (
     <React.Fragment>
       <MuiThemeProvider theme={theme}>
-          <AuthProvider>
-            <UserProvider>
-                <Routes/>
-            </UserProvider>
-          </AuthProvider>
+        <Routes/>
       </MuiThemeProvider>
     </React.Fragment>
   );

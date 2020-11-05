@@ -22,7 +22,6 @@ export const getFetch = (fetchUrl) => {
 
   return  fetch(fetchUrl, {
     signal: signal,
-    headers: {'Authorization': `Token ${localStorage.getItem('token')}` }
     })
     .then(response => {
       if(response.status != 204) { // status 204 for loggedout

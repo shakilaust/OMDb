@@ -15,7 +15,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from omdb.views import OmdbAPIView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api/omdb/', OmdbAPIView.as_view()),
 ]

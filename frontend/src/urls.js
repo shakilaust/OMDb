@@ -1,0 +1,1 @@
+export const OMDBAPI_URL_PREFIX = `http://www.omdbapi.com/?apikey=200273d1&` // don't know process.env.REACT_APP_OMDB_API_KEY not working
