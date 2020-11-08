@@ -13,8 +13,6 @@ class VisitorTestCase(TestCase):
         self.visitor = Visitor.objects.create(username='shakil')
         self.visitor_first_history = VisitorViewHistory.objects.create(visitor=self.visitor, imdb_id='t1231')
         self.visitor_second_history = VisitorViewHistory.objects.create(visitor=self.visitor, imdb_id='t1232')
-        self.visitor_first_review = VisitorReview.objects.create(visitor=self.visitor, imdb_id='t1231', review='good one')
-        self.visitor_first_review = VisitorReview.objects.create(visitor=self.visitor, imdb_id='t1232', review='bad one')
         self.visitor_watching = VisitorWatchList.objects.create(visitor=self.visitor, imdb_id='t1232')
     
     def test_visitor_creation(self):
@@ -30,4 +28,7 @@ class VisitorTestCase(TestCase):
         request = self.factory.get('/api/visitors/recent_watch/?username=shakil')
         response = VisitorViewSet.as_view({'get': 'recent_watch'})(request)
         self.assertEqual(response.data[0]['imdb_id'], 't1232')
+        self.assertEqual(response.data[0]['visitor'], self.visitor.id)
         self.assertEqual(response.data[1]['imdb_id'], 't1231')
+        self.assertEqual(response.data[1]['visitor'], self.visitor.id)
+        self.assertEqual(len(response.data), 2)
